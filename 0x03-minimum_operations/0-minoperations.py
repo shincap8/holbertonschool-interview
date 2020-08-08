@@ -3,7 +3,7 @@
 
 
 def minOperations(n):
-    if type(n) is not int or n <= 0:
+    if type(n) is not int or n <= 1:
         return 0
     nH = 1
     copy = 1
