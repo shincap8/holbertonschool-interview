@@ -24,15 +24,12 @@ return (length);
 */
 int is_palindrome(listint_t **head)
 {
-	int length, i = 0, *half;
+	int length, i = 0, half[1024];
 	listint_t *aux = *head;
 
 	if (head == NULL)
 		return (1);
 	length = list_length(aux);
-	half = malloc(sizeof(int) * (length / 2));
-	if (half == NULL)
-		return (0);
 	aux = *head;
 	for (i = 0; i < length / 2; i++)
 	{
@@ -45,13 +42,9 @@ int is_palindrome(listint_t **head)
 	while (aux)
 	{
 		if (aux->n != half[i])
-		{
-			free (half);
 			return (0);
-		}
 		i--;
 		aux = aux->next;
 	}
-	free(half);
 	return (1);
 }
