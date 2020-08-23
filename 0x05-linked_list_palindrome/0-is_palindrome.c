@@ -24,35 +24,26 @@ return (length);
 */
 int is_palindrome(listint_t **head)
 {
-	int length, i = 0, full = 0, jump = 0, half[1024];
+	int length, i = 0, half[1024];
 	listint_t *aux = *head;
 
 	if (head == NULL)
 		return (1);
 	length = list_length(aux);
 	aux = *head;
+	for (i = 0; i < length / 2; i++)
+	{
+		half[i] = aux->n;
+		aux = aux->next;
+	}
+	i--;
+	if (length % 2 == 1)
+		aux = aux->next;
 	while (aux)
 	{
-		if (i < (length / 2) && full == 0)
-		{
-			half[i] = aux->n;
-			i++;
-		}
-		if (i == length / 2)
-			full = 1, i--, aux = aux->next;
-		if (length % 2 == 1 && full == 1 && jump == 0)
-		{
-			aux = aux->next;
-			jump = 1;
-		}
-		if (length % 2 == 0 && full == 1 && jump == 0)
-			jump = 1;
-		if (jump == 1 && full == 1)
-		{
-			if (aux->n != half[i])
-				return (0);
-			i--;
-		}
+		if (aux->n != half[i])
+			return (0);
+		i--;
 		aux = aux->next;
 	}
 	return (1);
