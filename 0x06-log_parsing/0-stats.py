@@ -2,8 +2,6 @@
 """Log parsing"""
 
 import sys
-import signal
-
 
 total = 0
 status = {}
@@ -11,6 +9,8 @@ codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 try:
     for i, line in enumerate(sys.stdin, 1):
         split = line.split(' ')
+        if len(split) < 2:
+            continue
         code = split[-2]
         size = split[-1]
         if code not in status and code in codes:
