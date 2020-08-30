@@ -7,21 +7,22 @@ import signal
 
 total = 0
 status = {}
+codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 try:
     for i, line in enumerate(sys.stdin, 1):
         split = line.split(' ')
         code = split[-2]
         size = split[-1]
-        if code not in status:
+        if code not in status and code in codes:
             status[code] = 1
-        else:
+        elif code in status:
             status[code] = status[code] + 1
         total = total + eval(size)
-        if (i % 10 == 0 and i != 0):
+        if i % 10 == 0:
             print("File size: {}".format(total))
-            for key, value in status.items():
-                print("{}: {}".format(key, value))
+            for key in sorted(status.keys()):
+                print("{}: {}".format(key, status[key]))
 finally:
     print("File size: {}".format(total))
-    for key, value in status.items():
-        print("{}: {}".format(key, value))
+    for key in sorted(status.keys()):
+        print("{}: {}".format(key, status[key]))
