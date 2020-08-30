@@ -15,7 +15,7 @@ try:
         size = split[-1]
         if code not in status and code in codes:
             status[code] = 1
-        elif code in status:
+        elif code in status and code in codes:
             status[code] = status[code] + 1
         total = total + eval(size)
         if i % 10 == 0:
