@@ -12,9 +12,11 @@ if (Number.isInteger(parseInt(myArgs[0]))) {
         const name = await Name(characters[i]);
         console.log(name);
       }
-    });
+    }
+  );
 }
-function Name(Namelink) {
+
+function Name (Namelink) {
   const name = new Promise(
     (resolve, reject) => {
       request(Namelink, (error, response, body) => {
