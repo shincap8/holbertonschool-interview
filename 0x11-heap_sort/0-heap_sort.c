@@ -63,6 +63,8 @@ void heap_sort(int *array, size_t size)
 	size_t end = size - 1;
 	int aux;
 
+	if (size < 2)
+		return;
 	heapify(array, size);
 	while (end > 0)
 	{
