@@ -10,33 +10,29 @@
 */
 int search(int *array, int min, int max, int value)
 {
-	int mid = (min + max)  / 2, i, flag = 0;
-	int new_min = min, new_max = max, index = mid;
+	int mid = (min + max)  / 2, i;
 
 	if (min > max)
 		return (-1);
-	if (array[mid] < value)
-		new_min = mid + 1;
-	else if (array[mid] > value)
-		new_max = mid - 1;
-	else
-		flag = 1;
 	printf("Searching in array: ");
 	for (i = min; i <= max; i++)
 	{
-		if (flag == 1 && array[index - 1] == value)
-			index = index - 1;
 		if (i == max)
 			printf("%d\n", array[i]);
 		else
 			printf("%d, ", array[i]);
 	}
-	if (index != mid)
-		flag = 0, new_max = mid;
-	if (flag == 0)
-		return (search(array, new_min, new_max, value));
+	if (array[mid] == value)
+	{
+		if (array[mid - 1] == value)
+			return (search(array, min, mid, value));
+		return (mid);
+	}
+	else if (array[mid] >= value)
+		return (search(array, min, mid, value));
 	else
-		return (index);
+		return (search(array, mid + 1, max, value));
+	return (-1);
 }
 /**
 * advanced_binary - binary search
