@@ -1,51 +1,45 @@
 #!/usr/bin/python3
-"""
-Recursive function that queries the Reddit API and returns a list containing
-the titles of all hot articles for a given subreddit
-"""
-
+"""recursive function that queries the Reddit API, parses the title of
+all hot articles, and prints a sorted count of given keywords"""
 import operator
 import requests
 
 
-def count_words(subreddit, word_list, dict_list={}, after=''):
-    url = 'https://www.reddit.com/r/'+subreddit+'/hot.json?after='+after
-    json = requests.get(url, headers={'user-agent': 'Mozilla/5.0'}).json()
-
-    if 'error' in json or json['data']['children'] == []:
+def count_words(subreddit, word_list, after="", word_dict={}):
+    """recursive method"""
+    url = "https://reddit.com/r/" + subreddit + "/hot.json?&after=" + after
+    headers = {'user-agent': 'Chrome/81.0.4044.129'}
+    reddit = requests.get(url, headers=headers).json()
+    if 'error' in reddit or len(reddit['data']['children']) == 0:
         return None
-
-    if len(dict_list) == 0:
+    if len(word_dict) == 0:
         for word in word_list:
-            dict_list[word] = 0
-
-    children = json['data']['children']
+            word_dict[word] = 0
+    children = reddit['data']['children']
     for child in children:
-        tokens = child['data']['title'].upper()
-        tokens = tokens.split()
-        for token in tokens:
-            for word in word_list:
-                if token == word.upper():
-                    dict_list[word] += 1
-    after = json['data']['after']
+        words = child["data"]["title"].lower()
+        words = words.split()
+        for word in words:
+            for w in word_list:
+                if w.lower() == word:
+                    word_dict[w] += 1
+    after = reddit['data']['after']
     if after is None:
-        sorted_dict = sorted(dict_list.items(), key=operator.itemgetter(1),
-                             reverse=True)
-        ordered = False
-        size = len(sorted_dict)
-        while ordered is False:
-            ordered = True
-            for i in range(size):
-                if (i < size - 1):
-                    if (sorted_dict[i][1] == sorted_dict[i+1][1] and
-                            sorted_dict[i][0] > sorted_dict[i+1][0]):
-                        ordered = False
-                        aux = sorted_dict[i]
-                        sorted_dict[i] = sorted_dict[i+1]
-                        sorted_dict[i+1] = aux
-
-        for value in sorted_dict:
-            if value[1] > 0:
-                print("{}: {}".format(value[0], value[1]))
+        dict_sorted = sorted(word_dict.items(),
+                             key=operator.itemgetter(1), reverse=True)
+        ordered = 0
+        while ordered != 1:
+            ordered = 1
+            for i in range(len(dict_sorted)):
+                if i < len(dict_sorted) - 1:
+                    if dict_sorted[i][1] == dict_sorted[i+1][1]:
+                        if dict_sorted[i][0] > dict_sorted[i+1][0]:
+                            ordered = 0
+                            aux = dict_sorted[i]
+                            dict_sorted[i] = dict_sorted[i+1]
+                            dict_sorted[i+1] = aux
+        for w in dict_sorted:
+            if w[1] > 0:
+                print("{}: {}".format(w[0], w[1]))
     else:
-        count_words(subreddit, word_list, dict_list, after)
+        count_words(subreddit, word_list, after, word_dict)
