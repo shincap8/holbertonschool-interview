@@ -38,12 +38,16 @@ def count_words(subreddit, word_list, after="", word_dict={}):
                             aux = dict_sorted[i]
                             dict_sorted[i] = dict_sorted[i+1]
                             dict_sorted[i+1] = aux
-        keys = []
+        keys = {}
         for x in dict_sorted:
             if x[0].lower() not in keys:
-                keys.append(x[0].lower())
+                keys[x[0].lower()] = 1
+            else:
+                keys[x[0].lower()] += 1
+        print(keys)
         for w in dict_sorted:
-            if w[1] > 0 and w[0] in keys:
-                print("{}: {}".format(w[0], w[1]))
+            if w[1] > 0 and w[0].lower() in keys.keys():
+                print("{}: {}".format(w[0].lower(), w[1] * keys[w[0].lower()]))
+                del keys[w[0].lower()]
     else:
         count_words(subreddit, word_list, after, word_dict)
