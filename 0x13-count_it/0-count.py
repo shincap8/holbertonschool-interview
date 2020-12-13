@@ -47,7 +47,7 @@ def count_words(subreddit, word_list, after="", word_dict={}):
         print(keys)
         for w in dict_sorted:
             if w[1] > 0 and w[0].lower() in keys.keys():
-                print("{}: {}".format(w[0].lower(), w[1] * keys[w[0].lower()]))
+                print("{}: {}".format(w[0], w[1] * keys[w[0].lower()]))
                 del keys[w[0].lower()]
     else:
         count_words(subreddit, word_list, after, word_dict)
