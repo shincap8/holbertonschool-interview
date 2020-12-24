@@ -4,15 +4,17 @@
 * @tree: node to check
 * Return: height
 */
-size_t binary_tree_height(const binary_tree_t *tree)
+size_t binary_tree_height(const heap_t *tree)
 {
-	int lheight;
-	int rheight;
+	size_t lheight;
+	size_t rheight;
 
 	if (tree == NULL || (tree->left == NULL && tree->right == NULL))
 		return (0);
-	lheight = binary_tree_height(tree->left);
-	rheight = binary_tree_height(tree->right);
+	if (tree->left)
+		lheight = binary_tree_height(tree->left);
+	if (tree->right)
+		rheight = binary_tree_height(tree->right);
 
 	if (lheight >= rheight)
 		return (1 + lheight);
@@ -34,9 +36,7 @@ void binary_tree_preorder(heap_t *tree, heap_t **node, size_t h, size_t level)
 		return;
 	if (h == level)
 		*node = tree;
-
 	level++;
-
 	if (tree->left)
 		binary_tree_preorder(tree->left, node, h, level);
 	if (tree->right)
