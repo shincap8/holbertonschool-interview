@@ -1,26 +1,5 @@
 #include "binary_trees.h"
 /**
-* binary_tree_height - measures the height of a binary tree
-* @tree: node to check
-* Return: height
-*/
-size_t binary_tree_height(const heap_t *tree)
-{
-	size_t lheight;
-	size_t rheight;
-
-	if (tree == NULL || (tree->left == NULL && tree->right == NULL))
-		return (0);
-	if (tree->left)
-		lheight = binary_tree_height(tree->left);
-	if (tree->right)
-		rheight = binary_tree_height(tree->right);
-
-	if (lheight >= rheight)
-		return (1 + lheight);
-	return (1 + rheight);
-}
-/**
  * binary_tree_preorder - pre-order traversal that goes through a binary tree
  * @tree: pointer to root
  * @node: pointer to node in the tree
@@ -43,6 +22,27 @@ void binary_tree_preorder(heap_t *tree, heap_t **node, size_t h, size_t level)
 		binary_tree_preorder(tree->right, node, h, level);
 }
 /**
+* binary_tree_height - measures the height of a binary tree
+* @tree: node to check
+* Return: height
+*/
+size_t binary_tree_height(const heap_t *tree)
+{
+	size_t lheight = 0;
+	size_t rheight = 0;
+
+	if (tree == NULL || (tree->left == NULL && tree->right == NULL))
+		return (0);
+	if (tree->left)
+		lheight = binary_tree_height(tree->left);
+	if (tree->right)
+		rheight = binary_tree_height(tree->right);
+
+	if (lheight >= rheight)
+		return (1 + lheight);
+	return (1 + rheight);
+}
+/**
 * heap_extract - Function that extracts the root node of a Max Binary Heap
 * @root: double pointer to the root node of the heap
 * Return: return the value stored in the root node
@@ -63,7 +63,7 @@ int heap_extract(heap_t **root)
 		return (deleted);
 	}
 	binary_tree_preorder(aux, &del, binary_tree_height(aux), level);
-	while (aux->left != NULL || aux->right != NULL)
+	while (aux->left || aux->right)
 	{
 		if (aux->right == NULL || aux->left->n > aux->right->n)
 		{
@@ -78,7 +78,7 @@ int heap_extract(heap_t **root)
 			aux = aux->right;
 		}
 	}
-	del->n = aux->n;
+	aux->n = del->n;
 	if (del->parent->right)
 		del->parent->right = NULL;
 	else
