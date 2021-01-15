@@ -7,11 +7,8 @@ def rotate_2d_matrix(matrix):
     if len(matrix) < 2:
         return
     n = len(matrix)
-    print(len(matrix))
     for i in range(0, int(n / 2)):
         for j in range(i, n - i - 1):
-            """print("rango: ", n - i - 1)
-            print("i: {}, j: {}".format(i, j))"""
             aux = matrix[i][j]
             matrix[i][j] = matrix[n - j - 1][i]
             matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1]
