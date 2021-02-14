@@ -77,13 +77,13 @@ void top_down_split(int *B, size_t start, size_t end, int *A)
 */
 void merge_sort(int *array, size_t size)
 {
-	int B[size];
+	int *B;
 	size_t i;
 
-	if (!array)
+	if (array == NULL || size < 2)
 		return;
-	if (size < 2)
-		return;
+
+	B = malloc(sizeof(int) * size);
 	if (B == NULL)
 		return;
 	for (i = 0; i < size; i++)
@@ -91,4 +91,5 @@ void merge_sort(int *array, size_t size)
 		B[i] = array[i];
 	}
 	top_down_split(B, 0, 10, array);
+	free(B);
 }
