@@ -77,7 +77,7 @@ void top_down_split(int *B, size_t start, size_t end, int *A)
 */
 void merge_sort(int *array, size_t size)
 {
-	int *B[size];
+	int B[size];
 	size_t i;
 
 	for (i = 0; i < size; i++)
