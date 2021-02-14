@@ -41,8 +41,8 @@ void merge(int *array, int *L, int *R, size_t size)
 void merge_sort(int *array, size_t size)
 {
 	size_t middle = 0, i;
-	int L[size];
-	int R[size];
+	int L[100];
+	int R[100];
 
 	if (array == NULL || size < 2)
 		return;
