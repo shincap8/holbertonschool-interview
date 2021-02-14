@@ -30,9 +30,9 @@ void top_down_merge(int *A, size_t start, size_t middle, size_t end, int *B)
 {
 	size_t s = start, m = middle, i;
 
-	printf("[Left]: ");
+	printf("[left]: ");
 	print_split(A, start, middle);
-	printf("[Right]: ");
+	printf("[right]: ");
 	print_split(A, middle, end);
 	for (i = start; i < end; i++)
 	{
@@ -66,7 +66,7 @@ void top_down_split(int *B, size_t start, size_t end, int *A)
 	middle = (start + end) / 2;
 	top_down_split(A, start, middle, B);
 	top_down_split(A, middle, end, B);
-	printf("Mergin...\n");
+	printf("Merging...\n");
 	top_down_merge(B, start, middle, end, A);
 }
 /**
