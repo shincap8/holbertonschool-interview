@@ -10,6 +10,7 @@ void merge(int *array, int *L, int *R, size_t size)
 {
 	int i = 0, j = 0, k = 0;
 	int size_l, size_r;
+
 	size_l = size / 2;
 	size_r = size - size_l;
 	printf("Merging...\n");
