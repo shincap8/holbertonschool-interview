@@ -9,7 +9,6 @@ def makeChange(coins, total):
     if total <= 0:
         return n_coins
     coins.sort(reverse=True)
-    #en caso de no pasasr runtime en lugar de sortearlo sacar maximo
     while (total > 0 and coins):
         n = int(total / coins[0])
         total = total - (coins[0] * n)
