@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "list.h"
-
 /**
 * add_node_end - Add node to end of a double linked list.
 * @list: pointer to head of list
@@ -12,12 +9,17 @@ List *add_node_end(List **list, char *str)
 {
 	List *new, *last;
 
+	if (list == NULL || str == NULL)
+		return (NULL);
 	new = malloc(sizeof(List));
 	if (new == NULL)
 		return (NULL);
-	if (list == NULL || str == NULL)
+	new->str = strdup(str);
+	if (new->str == NULL)
+	{
+		free(new);
 		return (NULL);
-	new->str = str;
+	}
 	if (*list == NULL)
 	{
 		new->prev = new;
@@ -44,12 +46,17 @@ List *add_node_begin(List **list, char *str)
 {
 	List *new, *next;
 
+	if (list == NULL || str == NULL)
+		return (NULL);
 	new = malloc(sizeof(List));
 	if (new == NULL)
 		return (NULL);
-	if (list == NULL || str == NULL)
+	new->str = strdup(str);
+	if (new->str == NULL)
+	{
+		free(new);
 		return (NULL);
-	new->str = str;
+	}
 	if (*list == NULL)
 	{
 		new->prev = new;
