@@ -24,7 +24,7 @@ int check_order(binary_tree_t *tree, int n, int dir)
 	}
 	else
 	{
-		if (1 * tree->n > n)
+		if (1 * tree->n < n)
 		{
 			left = check_order(tree->left, n, dir);
 			right = check_order(tree->right, n, dir);
